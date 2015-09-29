@@ -6,5 +6,7 @@ GOALS:
 + wyświetlić tablicę w przeglądarce
 + przycisk generujący kolejne kroki
 + klikanie w komórkę zmienia jej stan
-- przerobić document write na DOM elements cośtam
++ przerobić document write na DOM elements cośtam
+- wymienić literki na grafikę z css'a
+- zrobić przyciski do ustawienia wielkości planszy
 

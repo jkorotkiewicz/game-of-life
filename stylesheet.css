@@ -5,7 +5,12 @@ body  {
 .mainboard div {	
 	display: inline-block;
 	padding: 0px 5px;
-
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .mainboard div:hover {
 	/*background-color: black;*/

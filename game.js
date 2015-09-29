@@ -1,12 +1,19 @@
 var x = 40;
 var y = 40;
 var world;
+var mousedown = false;
 
 function main() {
     var world = new Array(x);
     for (var i = 0; i < x; i++) {
         world[i] = new Array(y);
     }    
+    document.body.onmousedown = function() {
+        mousedown = true;
+    }
+    document.body.onmouseup = function() {
+        mousedown = false;
+    }
     initiateBoard(world);
     drawBoard(world);
     this.world = world;
@@ -88,7 +95,9 @@ function createCell(cell, i, j) {
     var id = i + '.' + j;
     var div = document.createElement("div");
     div.id = id;
-    div.addEventListener('click', function () {changeState(id)});
+    // div.addEventListener("click", function () {changeState(id)});
+    div.addEventListener("mousedown", function() {changeState(id)});
+    div.addEventListener("mouseenter", function() {if(mousedown) changeState(id)});
     div.appendChild(document.createTextNode(cell));
     return div;
 }

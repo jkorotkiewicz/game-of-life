@@ -29,7 +29,7 @@ function updateBoard() {
 	makeStep();
 	for (i = 0; i < x; i++) {        
         for (j = 0; j < y; j++) {
-        	var id = "" + i + '-' + j;
+        	var id = "" + i + '.' + j;
             document.getElementById(id).innerHTML=deadOrAlive(this.world[i][j]);
         }        
     }

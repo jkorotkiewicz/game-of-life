@@ -41,7 +41,7 @@ function updateBoard() {
 	makeStep();
 	for (i = 0; i < x; i++) {        
         for (j = 0; j < y; j++) {
-        	var id = "" + i + j;
+        	var id = "" + i + '-' + j;
         	// alert(id);
             document.getElementById(id).innerHTML=deadOrAlive(this.world[i][j]);
         }        
@@ -101,9 +101,26 @@ function deadOrAlive(cell) {
     var alive = ' 0';
 	return cell ? alive : dead;
 }
+
 function createCell(cell, i, j) {
-	return "<div id=\""+ i + j +"\"> " + cell + "<\/div>";
+    var id = i + '-' + j;
+	return "<div id='"
+            + id + 
+            "'" +  "onclick='changeState(\""
+             + id + 
+             "\")'> "
+             + cell + 
+             "<\/div>";
 }
+
+function changeState(id) {
+    var split = id.split("-");
+    var x = split[0];
+    var y = split[1];
+    this.world[x][y] = !this.world[x][y];
+    document.getElementById(id).innerHTML = deadOrAlive(this.world[x][y]);
+}
+
 function drawSection() {
     document.write("<section>");
     for (i = 0; i <= x; i++) {

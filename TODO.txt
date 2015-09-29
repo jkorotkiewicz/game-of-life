@@ -2,6 +2,9 @@ GOALS:
 + stworzyć tablicę a x b
 + stworzyć metodę która zainicjuje tablicę losowymi wartościami true/false
 + stworzyć metodę, która sprawdzi czy komórka żyje w następnej rundzie
-+ stworzyć metodę, która będzie aktualizować tablicę przez x rund
++ stworzyć metodę, która będzie aktualizować tablicę 
 + wyświetlić tablicę w przeglądarce
++ przycisk generujący kolejne kroki
++ klikanie w komórkę zmienia jej stan
+- przerobić document write na DOM elements cośtam
 

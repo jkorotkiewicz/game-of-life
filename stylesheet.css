@@ -7,3 +7,8 @@ body  {
 	padding: 0px 5px;
 
 }
+.mainboard div:hover {
+	background-color: black;
+	color: white;
+	cursor: default;
+}

@@ -1,5 +1,5 @@
-var x = 10;
-var y = 10;
+var x = 25;
+var y = 50;
 var world;
 
 function main() {
@@ -9,17 +9,7 @@ function main() {
     }    
     initiateBoard(world);
     drawBoard(world);
-    drawSection();
     this.world = world;
-    // // for(var i = 0; i < 100; i++) {
-    // 	makeStep(world);
-    // 	drawBoard(this.world);
-    // 	drawSection();    	
-    // 	drawBoard(world);
-    // 	drawSection();    	
-    // 	drawBoard(this.world);
-    // 	drawSection();    	
-    // // }
 }
 
 function makeStep() {
@@ -27,14 +17,12 @@ function makeStep() {
     for (var i = 0; i < this.x; i++) {
         newWorld[i] = new Array(this.y);
     }
-    // debugger;
     for (var i = 0; i < this.x; i++) {
         for (var j = 0; j < this.y; j++) {        	
         	newWorld[i][j] = checkNeighbours(this.world, i, j);
         }
     }    
     this.world = newWorld;
-    //return newWorld;
 }
 
 function updateBoard() {
@@ -42,7 +30,6 @@ function updateBoard() {
 	for (i = 0; i < x; i++) {        
         for (j = 0; j < y; j++) {
         	var id = "" + i + '-' + j;
-        	// alert(id);
             document.getElementById(id).innerHTML=deadOrAlive(this.world[i][j]);
         }        
     }
@@ -63,11 +50,6 @@ function checkNeighbours(world, x, y) {
             if(!(i==x && j==y)) counter += world[i][j];
         }
     }
-    // document.write(w + ' ' + n  + ' ' + e  + ' ' + s);
-    // document.write(' i = ' + i + ' j = ' + j + ' x = ' + x + ' y = ' + y + ' counter = ' + counter + '\n');
-    // alert('x = ' + x + ' y = ' + y + ' counter = ' + counter);
-    //if(counter < 2 || counter > 3) return 0;
-    // return counter;
     if(world[x][y]) return(counter<2?0:counter>3?0:1);
     else return(counter==3?1:0);
 }
@@ -75,7 +57,6 @@ function checkNeighbours(world, x, y) {
 function initiateBoard(world) {
     for (i = 0; i < x; i++) {
         for (j = 0; j < y; j++) {
-            // world[i][j] = Math.floor(Math.random() + 0.2);
             world[i][j] = 0;
             if(i == 0 && j == 1) world[i][j] = 1;
             if(i == 1 && j == 2) world[i][j] = 1;
@@ -119,14 +100,6 @@ function changeState(id) {
     var y = split[1];
     this.world[x][y] = !this.world[x][y];
     document.getElementById(id).innerHTML = deadOrAlive(this.world[x][y]);
-}
-
-function drawSection() {
-    document.write("<section>");
-    for (i = 0; i <= x; i++) {
-        document.write("--");
-    }
-    document.write("</section>");
 }
 
 //main();

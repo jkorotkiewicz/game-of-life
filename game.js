@@ -1,5 +1,5 @@
-var x = 25;
-var y = 50;
+var x = 40;
+var y = 40;
 var world;
 
 function main() {
@@ -69,33 +69,32 @@ function initiateBoard(world) {
 
 function drawBoard(world)  {   
     for (i = 0; i < x; i++) {
-        document.write("<section class=\"mainboard\">");
+        var section = document.createElement("section");
+        section.className = "mainboard"; 
         for (j = 0; j < y; j++) {
-            document.write(createCell(deadOrAlive(world[i][j]), i, j));
+            section.appendChild(createCell(deadOrAlive(world[i][j]), i, j));
         }
-        document.write("</section>");
+        document.body.appendChild(section);
     }
 }
 
 function deadOrAlive(cell) {
-	var dead = ' &middot';
-    var alive = ' 0';
+	var dead = '·';
+    var alive = '0';
 	return cell ? alive : dead;
 }
 
 function createCell(cell, i, j) {
-    var id = i + '-' + j;
-	return "<div id='"
-            + id + 
-            "'" +  "onclick='changeState(\""
-             + id + 
-             "\")'> "
-             + cell + 
-             "<\/div>";
+    var id = i + '.' + j;
+    var div = document.createElement("div");
+    div.id = id;
+    div.addEventListener('click', function () {changeState(id)});
+    div.appendChild(document.createTextNode(cell));
+    return div;
 }
 
 function changeState(id) {
-    var split = id.split("-");
+    var split = id.split(".");
     var x = split[0];
     var y = split[1];
     this.world[x][y] = !this.world[x][y];

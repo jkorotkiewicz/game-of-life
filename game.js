@@ -1,22 +1,28 @@
-var x = 100;
-var y = 100;
+var x = 10;
+var y = 10;
+var world;
 
 function main() {
     var world = new Array(x);
     for (var i = 0; i < x; i++) {
         world[i] = new Array(y);
-    }
+    }    
     initiateBoard(world);
     drawBoard(world);
     drawSection();
-    for(var i = 0; i < 100; i++) {
-    	world = makeStep(world);
-    	drawBoard(world);
-    	drawSection();    	
-    }
+    this.world = world;
+    // // for(var i = 0; i < 100; i++) {
+    // 	makeStep(world);
+    // 	drawBoard(this.world);
+    // 	drawSection();    	
+    // 	drawBoard(world);
+    // 	drawSection();    	
+    // 	drawBoard(this.world);
+    // 	drawSection();    	
+    // // }
 }
 
-function makeStep(world) {
+function makeStep() {
     var newWorld = new Array(x);
     for (var i = 0; i < this.x; i++) {
         newWorld[i] = new Array(this.y);
@@ -24,15 +30,25 @@ function makeStep(world) {
     // debugger;
     for (var i = 0; i < this.x; i++) {
         for (var j = 0; j < this.y; j++) {        	
-        	newWorld[i][j] = checkNeighbours(world, i, j);
+        	newWorld[i][j] = checkNeighbours(this.world, i, j);
         }
+    }    
+    this.world = newWorld;
+    //return newWorld;
+}
+
+function updateBoard() {
+	makeStep();
+	for (i = 0; i < x; i++) {        
+        for (j = 0; j < y; j++) {
+        	var id = "" + i + j;
+        	// alert(id);
+            document.getElementById(id).innerHTML=deadOrAlive(this.world[i][j]);
+        }        
     }
-    world = newWorld;
-    return newWorld;
 }
 
 function checkNeighbours(world, x, y) {
-
     var n = 1;
     var s = 1;
     var e = 1;
@@ -70,18 +86,24 @@ function initiateBoard(world) {
     }
 }
 
-function drawBoard(world) {
-    var dead = ' &middot';
-    var alive = ' 0';
+function drawBoard(world)  {   
     for (i = 0; i < x; i++) {
-        document.write("<section >");
+        document.write("<section class=\"mainboard\">");
         for (j = 0; j < y; j++) {
-            document.write(world[i][j] ? alive : dead);
+            document.write(createCell(deadOrAlive(world[i][j]), i, j));
         }
         document.write("</section>");
     }
 }
 
+function deadOrAlive(cell) {
+	var dead = ' &middot';
+    var alive = ' 0';
+	return cell ? alive : dead;
+}
+function createCell(cell, i, j) {
+	return "<div id=\""+ i + j +"\"> " + cell + "<\/div>";
+}
 function drawSection() {
     document.write("<section>");
     for (i = 0; i <= x; i++) {
@@ -90,4 +112,4 @@ function drawSection() {
     document.write("</section>");
 }
 
-main();
+//main();

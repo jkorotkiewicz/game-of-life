@@ -2,3 +2,8 @@ body  {
 	font-family: monospace;
 	padding: 0;
 }
+.mainboard div {	
+	display: inline-block;
+	padding: 0px 5px;
+
+}

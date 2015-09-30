@@ -1,23 +1,26 @@
 var x = 40;
 var y = 40;
-var world;
+var world = new Array(x);
 var mousedown = false;
 var lifeGoesOn = null;
+for (var i = 0; i < x; i++) {
+    world[i] = new Array(y);
+}
 
-function main() {
-    var world = new Array(x);
-    for (var i = 0; i < x; i++) {
-        world[i] = new Array(y);
-    }    
+function main() { 
     document.body.onmousedown = function() {
         mousedown = true;
-    }
+    };
     document.body.onmouseup = function() {
         mousedown = false;
-    }
-    initiateBoard(world);
-    drawBoard(world);
-    this.world = world;    
+    };
+    initiateBoard(this.world);  
+}
+
+function reset() {
+    stop();
+    resetBoard(this.world);
+    // drawBoard(this.world);
 }
 
 function play() {
@@ -26,7 +29,8 @@ function play() {
 }
 
 function stop() {
-    clearInterval(lifeGoesOn);
+    if(lifeGoesOn !== null)
+        clearInterval(lifeGoesOn);
     lifeGoesOn = null;
 }
 
@@ -72,24 +76,32 @@ function checkNeighbours(world, x, y) {
     else return(counter==3?1:0);
 }
 
-function initiateBoard(world) {
+function createGlider(world, i, j) {
+    if(i == 0 && j == 1) world[i][j] = 1;
+    if(i == 1 && j == 2) world[i][j] = 1;
+    if(i == 2 && j == 0) world[i][j] = 1;
+    if(i == 2 && j == 1) world[i][j] = 1;
+    if(i == 2 && j == 2) world[i][j] = 1;
+}
+
+function resetBoard(world) {
     for (i = 0; i < x; i++) {
         for (j = 0; j < y; j++) {
             world[i][j] = 0;
-            if(i == 0 && j == 1) world[i][j] = 1;
-            if(i == 1 && j == 2) world[i][j] = 1;
-            if(i == 2 && j == 0) world[i][j] = 1;
-            if(i == 2 && j == 1) world[i][j] = 1;
-            if(i == 2 && j == 2) world[i][j] = 1;
+            createGlider(world, i, j);
+            var id = i + '.' + j;
+            document.getElementById(id).innerHTML = deadOrAlive(world[i][j]);
         }
     }
 }
 
-function drawBoard(world)  {   
+function initiateBoard(world)  {   
     for (i = 0; i < x; i++) {
         var section = document.createElement("section");
         section.className = "mainboard"; 
         for (j = 0; j < y; j++) {
+            world[i][j] = 0;
+            createGlider(world, i, j);
             section.appendChild(createCell(deadOrAlive(world[i][j]), i, j));
         }
         document.body.appendChild(section);
@@ -106,7 +118,6 @@ function createCell(cell, i, j) {
     var id = i + '.' + j;
     var div = document.createElement("div");
     div.id = id;
-    // div.addEventListener("click", function () {changeState(id)});
     div.addEventListener("mousedown", function() {changeState(id)});
     div.addEventListener("mouseenter", function() {if(mousedown) changeState(id)});
     div.appendChild(document.createTextNode(cell));

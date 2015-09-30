@@ -11,6 +11,7 @@ body  {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    cursor: default;
 }
 .mainboard div:hover {
 	/*background-color: black;*/

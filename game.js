@@ -2,6 +2,7 @@ var x = 40;
 var y = 40;
 var world;
 var mousedown = false;
+var lifeGoesOn = null;
 
 function main() {
     var world = new Array(x);
@@ -16,20 +17,17 @@ function main() {
     }
     initiateBoard(world);
     drawBoard(world);
-    this.world = world;
+    this.world = world;    
 }
 
-function makeStep() {
-    var newWorld = new Array(x);
-    for (var i = 0; i < this.x; i++) {
-        newWorld[i] = new Array(this.y);
-    }
-    for (var i = 0; i < this.x; i++) {
-        for (var j = 0; j < this.y; j++) {        	
-        	newWorld[i][j] = checkNeighbours(this.world, i, j);
-        }
-    }    
-    this.world = newWorld;
+function play() {
+    if(lifeGoesOn === null)
+        lifeGoesOn = setInterval(updateBoard, 100);
+}
+
+function stop() {
+    clearInterval(lifeGoesOn);
+    lifeGoesOn = null;
 }
 
 function updateBoard() {
@@ -40,6 +38,19 @@ function updateBoard() {
             document.getElementById(id).innerHTML=deadOrAlive(this.world[i][j]);
         }        
     }
+}
+
+function makeStep() {
+    var newWorld = new Array(x);
+    for (var i = 0; i < this.x; i++) {
+        newWorld[i] = new Array(this.y);
+    }
+    for (var i = 0; i < this.x; i++) {
+        for (var j = 0; j < this.y; j++) {          
+            newWorld[i][j] = checkNeighbours(this.world, i, j);
+        }
+    }    
+    this.world = newWorld;
 }
 
 function checkNeighbours(world, x, y) {

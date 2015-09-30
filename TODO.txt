@@ -9,4 +9,5 @@ GOALS:
 + przerobić document write na DOM elements cośtam
 - wymienić literki na grafikę z css'a
 - zrobić przyciski do ustawienia wielkości planszy
-
+- automat do samodzielnego życia
+- przycisk do resetowania planszy

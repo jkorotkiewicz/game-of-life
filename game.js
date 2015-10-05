@@ -1,5 +1,5 @@
-var x = 40;
-var y = 40;
+var x = 80;
+var y = 80;
 var world = new Array(x);
 var mousedown = false;
 var lifeGoesOn = null;
@@ -118,8 +118,8 @@ function createCell(cell, i, j) {
     var id = i + '.' + j;
     var div = document.createElement("div");
     div.id = id;
-    div.addEventListener("mousedown", function() {changeState(id)});
-    div.addEventListener("mouseenter", function() {if(mousedown) changeState(id)});
+    div.addEventListener("mousedown", function() {changeState(id);});
+    div.addEventListener("mouseenter", function() {if(mousedown) changeState(id);});
     div.appendChild(document.createTextNode(cell));
     return div;
 }

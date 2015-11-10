@@ -3,18 +3,19 @@ var y = 80;
 var world = new Array(x);
 var mousedown = false;
 var lifeGoesOn = null;
+var isPixel = true;
 for (var i = 0; i < x; i++) {
     world[i] = new Array(y);
 }
 
-function main() { 
+function main() {
     document.body.onmousedown = function() {
         mousedown = true;
     };
     document.body.onmouseup = function() {
         mousedown = false;
     };
-    initiateBoard(this.world);  
+    initiateBoard(this.world);
 }
 
 function reset() {
@@ -36,11 +37,11 @@ function stop() {
 
 function updateBoard() {
 	makeStep();
-	for (i = 0; i < x; i++) {        
+	for (i = 0; i < x; i++) {
         for (j = 0; j < y; j++) {
         	var id = "" + i + '.' + j;
-            document.getElementById(id).innerHTML=deadOrAlive(this.world[i][j]);
-        }        
+            setCellState(id, this.world[i][j]);
+        }
     }
 }
 
@@ -50,10 +51,10 @@ function makeStep() {
         newWorld[i] = new Array(this.y);
     }
     for (var i = 0; i < this.x; i++) {
-        for (var j = 0; j < this.y; j++) {          
+        for (var j = 0; j < this.y; j++) {
             newWorld[i][j] = checkNeighbours(this.world, i, j);
         }
-    }    
+    }
     this.world = newWorld;
 }
 
@@ -68,7 +69,7 @@ function checkNeighbours(world, x, y) {
     if (y == 0) n = 0;
     if (y == this.y-1) s = 0;
     for (var i = x - w; i <= x + e ; i++) {
-        for (var j = y - n; j <= y + s ; j++) {        	
+        for (var j = y - n; j <= y + s ; j++) {
             if(!(i==x && j==y)) counter += world[i][j];
         }
     }
@@ -90,27 +91,33 @@ function resetBoard(world) {
             world[i][j] = 0;
             createGlider(world, i, j);
             var id = i + '.' + j;
-            document.getElementById(id).innerHTML = deadOrAlive(world[i][j]);
+            setCellState(id, world[i][j]);
         }
     }
 }
-
-function initiateBoard(world)  {   
+function initiateBoard(world)  {
     for (i = 0; i < x; i++) {
         var section = document.createElement("section");
-        section.className = "mainboard"; 
+        if(this.isPixel)
+          section.className = "mainboardPixel";
+        else
+          section.className = "mainboard";
         for (j = 0; j < y; j++) {
             world[i][j] = 0;
             createGlider(world, i, j);
-            section.appendChild(createCell(deadOrAlive(world[i][j]), i, j));
+            section.appendChild(createCell(world[i][j], i, j));
         }
         document.body.appendChild(section);
     }
 }
-
 function deadOrAlive(cell) {
 	var dead = '·';
-    var alive = '0';
+  var alive = '0';
+  return cell ? alive : dead;
+}
+function deadOrAlivePixel(cell) {
+  var dead = 'dead';
+  var alive = 'alive';
 	return cell ? alive : dead;
 }
 
@@ -120,7 +127,10 @@ function createCell(cell, i, j) {
     div.id = id;
     div.addEventListener("mousedown", function() {changeState(id);});
     div.addEventListener("mouseenter", function() {if(mousedown) changeState(id);});
-    div.appendChild(document.createTextNode(cell));
+    if(this.isPixel)
+      div.className = deadOrAlivePixel(cell);
+    else
+      div.appendChild(document.createTextNode(deadOrAlive(cell)));
     return div;
 }
 
@@ -129,7 +139,13 @@ function changeState(id) {
     var x = split[0];
     var y = split[1];
     this.world[x][y] = !this.world[x][y];
-    document.getElementById(id).innerHTML = deadOrAlive(this.world[x][y]);
+    setCellState(id, this.world[x][y]);
 }
 
+function setCellState(id, cell) {
+  if(this.isPixel)
+    document.getElementById(id).className = deadOrAlivePixel(cell);
+  else
+    document.getElementById(id).innerHTML = deadOrAlive(cell);
+}
 //main();

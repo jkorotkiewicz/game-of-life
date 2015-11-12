@@ -31,19 +31,21 @@ function reset() {
 }
 
 function play() {
-    if(lifeGoesOn === null)
+    if(lifeGoesOn === null) {
         lifeGoesOn = setInterval(makeStepAndUpdateBoard, 100);
+      }
 }
 
 function stop() {
-    if(lifeGoesOn !== null)
+    if(lifeGoesOn !== null) {
         clearInterval(lifeGoesOn);
+    }
     lifeGoesOn = null;
 }
 
 function changeBoardType(boardType) {
-  if(boardType == "text") isPixel = false;
-  else if(boardType == "pixel") isPixel = true;
+  if(boardType == "text") { isPixel = false; }
+  else if(boardType == "pixel") { isPixel = true; }
   var sectionArray = document.getElementsByTagName('section');
   for(var i = 0; i < sectionArray.length; i++) {
     sectionArray[i].className = getSectionClassName();
@@ -88,25 +90,25 @@ function checkNeighbours(world, x, y) {
     var e = 1;
     var w = 1;
     var counter = 0;
-    if (x == 0) w = 0;
-    if (x == this.x-1) e = 0;
-    if (y == 0) n = 0;
-    if (y == this.y-1) s = 0;
+    if (x == 0) { w = 0;}
+    if (x == this.x-1) { e = 0;}
+    if (y == 0) { n = 0;}
+    if (y == this.y-1) { s = 0;}
     for (var i = x - w; i <= x + e ; i++) {
         for (var j = y - n; j <= y + s ; j++) {
             if(!(i==x && j==y)) counter += world[i][j];
         }
     }
-    if(world[x][y]) return(counter<2?0:counter>3?0:1);
-    else return(counter==3?1:0);
+    if(world[x][y]) { return(counter<2?0:counter>3?0:1);}
+    else { return(counter==3?1:0);}
 }
 
 function createGlider(world, i, j) {
-    if(i == 0 && j == 1) world[i][j] = 1;
-    if(i == 1 && j == 2) world[i][j] = 1;
-    if(i == 2 && j == 0) world[i][j] = 1;
-    if(i == 2 && j == 1) world[i][j] = 1;
-    if(i == 2 && j == 2) world[i][j] = 1;
+    if(i == 0 && j == 1) { world[i][j] = 1;}
+    if(i == 1 && j == 2) { world[i][j] = 1;}
+    if(i == 2 && j == 0) { world[i][j] = 1;}
+    if(i == 2 && j == 1) { world[i][j] = 1;}
+    if(i == 2 && j == 2) { world[i][j] = 1;}
 }
 
 function resetBoard(world) {
@@ -144,10 +146,11 @@ function createCell(cell, i, j) {
     div.id = id;
     div.addEventListener("mousedown", function() {changeState(id);});
     div.addEventListener("mouseenter", function() {if(mousedown) changeState(id);});
-    if(this.isPixel)
+    if(this.isPixel) {
       div.className = deadOrAlive(cell);
-    else
+    } else {
       div.appendChild(document.createTextNode(deadOrAlive(cell)));
+    }
     return div;
 }
 

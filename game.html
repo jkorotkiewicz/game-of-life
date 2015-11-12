@@ -9,9 +9,13 @@
 </head>
 <body>
 <p>Game of life</p>
-<button onclick="updateBoard()">Next round</button> 
+<button onclick="makeStepAndUpdateBoard()">Next round</button>
 <button onclick="play()">Play</button>
 <button onclick="stop()">Stop</button>
 <button onclick="reset()">Reset</button>
+<form>
+  <input type="radio" id="radio1" name="boardType" value="pixel" checked="checked">Pixel Board</input>
+  <input type="radio" id="radio2" name="boardType" value="text">Text board</input>
+</form>
 <script>main()</script>
 </body>

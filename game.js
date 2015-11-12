@@ -15,6 +15,12 @@ function main() {
     document.body.onmouseup = function() {
         mousedown = false;
     };
+    document.getElementById('radio1').onclick = function() {
+      changeBoardType(this.value);
+    };
+    document.getElementById('radio2').onclick = function() {
+      changeBoardType(this.value);
+    };
     initiateBoard(this.world);
 }
 
@@ -26,7 +32,7 @@ function reset() {
 
 function play() {
     if(lifeGoesOn === null)
-        lifeGoesOn = setInterval(updateBoard, 100);
+        lifeGoesOn = setInterval(makeStepAndUpdateBoard, 100);
 }
 
 function stop() {
@@ -35,8 +41,26 @@ function stop() {
     lifeGoesOn = null;
 }
 
+function changeBoardType(boardType) {
+  if(boardType == "text") isPixel = false;
+  else if(boardType == "pixel") isPixel = true;
+  var sectionArray = document.getElementsByTagName('section');
+  for(var i = 0; i < sectionArray.length; i++) {
+    sectionArray[i].className = getSectionClassName();
+  }
+  updateBoard();
+}
+
+function getSectionClassName() {
+  return this.isPixel ? "mainboardPixel" : "mainboard";
+}
+
+function makeStepAndUpdateBoard() {
+  makeStep();
+  updateBoard();
+}
+
 function updateBoard() {
-	makeStep();
 	for (i = 0; i < x; i++) {
         for (j = 0; j < y; j++) {
         	var id = "" + i + '.' + j;
@@ -98,10 +122,7 @@ function resetBoard(world) {
 function initiateBoard(world)  {
     for (i = 0; i < x; i++) {
         var section = document.createElement("section");
-        if(this.isPixel)
-          section.className = "mainboardPixel";
-        else
-          section.className = "mainboard";
+        section.className = getSectionClassName();
         for (j = 0; j < y; j++) {
             world[i][j] = 0;
             createGlider(world, i, j);
@@ -110,14 +131,10 @@ function initiateBoard(world)  {
         document.body.appendChild(section);
     }
 }
+
 function deadOrAlive(cell) {
-	var dead = '·';
-  var alive = '0';
-  return cell ? alive : dead;
-}
-function deadOrAlivePixel(cell) {
-  var dead = 'dead';
-  var alive = 'alive';
+  var dead = this.isPixel ? 'dead' : '·';
+  var alive = this.isPixel ? 'alive' : '0';
 	return cell ? alive : dead;
 }
 
@@ -128,7 +145,7 @@ function createCell(cell, i, j) {
     div.addEventListener("mousedown", function() {changeState(id);});
     div.addEventListener("mouseenter", function() {if(mousedown) changeState(id);});
     if(this.isPixel)
-      div.className = deadOrAlivePixel(cell);
+      div.className = deadOrAlive(cell);
     else
       div.appendChild(document.createTextNode(deadOrAlive(cell)));
     return div;
@@ -143,9 +160,12 @@ function changeState(id) {
 }
 
 function setCellState(id, cell) {
-  if(this.isPixel)
-    document.getElementById(id).className = deadOrAlivePixel(cell);
-  else
+  if(this.isPixel) {
+    document.getElementById(id).className = deadOrAlive(cell);
+    document.getElementById(id).innerHTML = "";
+  }
+  else {
     document.getElementById(id).innerHTML = deadOrAlive(cell);
+  }
 }
 //main();

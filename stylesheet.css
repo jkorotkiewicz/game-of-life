@@ -13,19 +13,13 @@ body  {
     user-select: none;
     cursor: default;
 }
-.mainboard div:hover {
-	/*background-color: black;*/
-	/*color: white;*/
-	/*text-shadow: 0px 0px 5px #888888;*/
+.mainboard  div:hover {
 	box-shadow: 0px 0px 5px #888888;
 	transform: scale(1.5, 1.5);
 	cursor: default;
 }
 .mainboardPixel div:hover {
-	/*background-color: black;*/
-	/*color: white;*/
-	/*text-shadow: 0px 0px 5px #888888;*/
-	box-shadow: 0px 0px 5px #888888;
+	box-shadow: 0px 0px 10px #888888;
 	transform: scale(1.5, 1.5);
 	cursor: default;
 }
@@ -35,8 +29,8 @@ body  {
 	/*padding: 0px 5px;*/
 	background: white;
 	border: 1px  solid black;
-	height: 8px;
-	width: 8px;
+	height: 10px;
+	width: 10px;
 	-webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -55,5 +49,5 @@ body  {
 }
 
 section.mainboardPixel {
-	height: 10px;
+	height: 12px;
 }
